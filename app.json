@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "lumi",
+    "name": "Lumi",
     "slug": "lumi",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,6 +8,11 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "F7F4F2"
+    },
     "ios": {
       "supportsTablet": true
     },
@@ -24,18 +29,13 @@
     },
     "plugins": [
       "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
-        }
-      ]
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "expo": {
+      "scheme": "com.supabase"
     }
   }
 }

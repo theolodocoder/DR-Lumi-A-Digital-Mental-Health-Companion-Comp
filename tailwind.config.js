@@ -6,9 +6,14 @@ module.exports = {
     extend: {
       fontFamily: {
         Urbanist: ["Urbanist", "sans-serif"],
+        UrbanistExtraBold: ["Urbanist-ExtraBold", "sans-serif"],
         UrbanistBold: ["Urbanist-Bold", "sans-serif"],
         UrbanistSemiBold: ["Urbanist-SemiBold", "sans-serif"],
         UrbanistMedium: ["Urbanist-Medium", "sans-serif"],
+      },
+      colors: {
+        primary: "#4B3425",
+        background: "#F7F7F7",
       },
     },
   },
