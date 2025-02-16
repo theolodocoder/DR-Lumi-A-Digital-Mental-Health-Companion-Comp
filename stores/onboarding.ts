@@ -1,47 +1,58 @@
 // stores/onboardingStore.ts
 import { create } from "zustand";
+import { calculateStressScore } from "@/app/(onboarding)/_lib/utils";
+import {
+  HadProfessionalHelpScore,
+  MedicationsScore,
+  MoodScore,
+  PhysicalSymptomsScore,
+  SleepQualityScore,
+  StressLevelScore,
+} from "@/app/(onboarding)/_lib/enums";
 
-export type OnboardingState = {
-  mood: string | null;
-  hadProfessionalHelp: boolean | null;
-  sleepQuality: string | null;
-  stressLevel: string | null;
-  physicalSymptoms: string | null;
-  medications: string | null;
-  expressions: string | null;
-  setMood: (mood: string) => void;
-  setHadProfessionalHelp: (hadProfessionalHelp: boolean) => void;
-  setSleepQuality: (quality: string) => void;
-  setStressLevel: (level: string) => void;
-  setPhysicalSymptoms: (symptoms: string) => void;
-  setMedications: (medications: string) => void;
-  setExpressions: (expressions: string) => void;
+type OnboardingState = {
+  mood: keyof typeof MoodScore | null;
+  sleepQuality: keyof typeof SleepQualityScore | null;
+  stressLevel: keyof typeof StressLevelScore | null;
+  hadProfessionalHelp: keyof typeof HadProfessionalHelpScore | null;
+  physicalSymptoms: keyof typeof PhysicalSymptomsScore | null;
+  medications: keyof typeof MedicationsScore | null;
+  stressScore: number | null;
+  mentalState: string | null;
+  setMood: (mood: keyof typeof MoodScore) => void;
+  setSleepQuality: (quality: keyof typeof SleepQualityScore) => void;
+  setHadProfessionalHelp: (help: keyof typeof HadProfessionalHelpScore) => void;
+  setStressLevel: (level: keyof typeof StressLevelScore) => void;
+  setPhysicalSymptoms: (symptoms: keyof typeof PhysicalSymptomsScore) => void;
+  setMedications: (medications: keyof typeof MedicationsScore) => void;
+  calculateAndSetStressScore: () => void;
   reset: () => void;
 };
 
 export const useOnboardingStore = create<OnboardingState>((set) => ({
   mood: null,
-  hadProfessionalHelp: null,
   sleepQuality: null,
   stressLevel: null,
+  hadProfessionalHelp: null,
   physicalSymptoms: null,
   medications: null,
-  expressions: null,
+  stressScore: null,
+  mentalState: null,
   setMood: (mood) => set({ mood }),
-  setHadProfessionalHelp: (hadProfessionalHelp) => set({ hadProfessionalHelp }),
   setSleepQuality: (sleepQuality) => set({ sleepQuality }),
+  setHadProfessionalHelp: (hadProfessionalHelp) => set({ hadProfessionalHelp }),
   setStressLevel: (stressLevel) => set({ stressLevel }),
   setPhysicalSymptoms: (physicalSymptoms) => set({ physicalSymptoms }),
   setMedications: (medications) => set({ medications }),
-  setExpressions: (expressions) => set({ expressions }),
+  calculateAndSetStressScore: () => {},
   reset: () =>
     set({
       mood: null,
       sleepQuality: null,
-      hadProfessionalHelp: null,
       stressLevel: null,
       physicalSymptoms: null,
       medications: null,
-      expressions: null,
+      stressScore: null,
+      mentalState: null,
     }),
 }));

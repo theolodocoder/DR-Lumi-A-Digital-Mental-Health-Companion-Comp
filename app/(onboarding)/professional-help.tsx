@@ -6,6 +6,7 @@ import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ContinueButton from "./_lib/components/ContinueButton";
 import ProgressHeader from "./_lib/components/ProgressHeader";
+import Header from "./_lib/components/Header";
 
 type Props = {};
 
@@ -16,7 +17,7 @@ const ProfessionalHelp = (props: Props) => {
     if (hadProfessionalHelp == null) {
       return Alert.alert("Please select an option");
     }
-    router.replace("/(onboarding)/physical-symptoms");
+    router.push("/(onboarding)/physical-symptoms");
   };
 
   return (
@@ -24,12 +25,10 @@ const ProfessionalHelp = (props: Props) => {
       <ProgressHeader currentStep={2} onBack={() => router.back()} />
       <View className="w-full px-5 items-center mt-10">
         <Image source={images.profHelp} />
-        <Text className="text-3xl tracking-tighter font-UrbanistExtraBold text-primary text-center mt-10">
-          Have you sought professional help before?
-        </Text>
+        <Header text="Have you ever sought professional help before?" />
         <View className="flex-row mt-5 gap-x-5">
           <TouchableOpacity
-            className={`px-4 py-2 rounded-full ${
+            className={` flex-1 py-5 items-center rounded-full ${
               hadProfessionalHelp === true ? "bg-green-500" : "bg-white"
             }`}
             onPress={() => setHadProfessionalHelp(true)}
@@ -37,13 +36,13 @@ const ProfessionalHelp = (props: Props) => {
             <Text
               className={`${
                 hadProfessionalHelp === true ? "text-white" : "text-primary"
-              } font-UrbanistExtraBold text-xl`}
+              } font-UrbanistExtraBold text-2xl`}
             >
               Yes
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            className={`px-4 py-2 rounded-full ml-4 ${
+            className={`flex-1 py-5 items-center rounded-full ml-4 ${
               hadProfessionalHelp === false ? "bg-red-500" : "bg-white"
             }`}
             onPress={() => setHadProfessionalHelp(false)}
@@ -51,7 +50,7 @@ const ProfessionalHelp = (props: Props) => {
             <Text
               className={`${
                 hadProfessionalHelp === false ? "text-white" : "text-primary"
-              } font-UrbanistExtraBold text-xl`}
+              } font-UrbanistExtraBold text-2xl`}
             >
               No
             </Text>

@@ -1,8 +1,8 @@
 export const moodEmotes = {
   happy: "😄",
   sad: "😢",
+  meh: "😐",
   angry: "😡",
-  surprised: "😲",
-  disgusted: "🤢",
-  scared: "😨",
+  overjoyed: "🤩",
+  anxious: "😨",
 };

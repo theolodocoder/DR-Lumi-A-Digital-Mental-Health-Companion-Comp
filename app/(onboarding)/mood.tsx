@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import ProgressHeader from "./_lib/components/ProgressHeader";
 import { moodEmotes } from "./_lib/constants";
 import ContinueButton from "./_lib/components/ContinueButton";
+import Header from "./_lib/components/Header";
 
 const MoodScreen = () => {
   const { mood, setMood } = useOnboardingStore();
@@ -19,9 +20,7 @@ const MoodScreen = () => {
     <SafeAreaView className="flex-1 bg-background ">
       <ProgressHeader currentStep={1} onBack={() => router.back()} />
       <View className="flex-1 items-center w-full px-5">
-        <Text className="font-UrbanistExtraBold text-primary text-5xl text-center mb-4 tracking-tighter mt-10">
-          How would you describe your mood?
-        </Text>
+        <Header text="How would you describe your mood?" />
 
         <View className="mt-5">
           {mood ? (
