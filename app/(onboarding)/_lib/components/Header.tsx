@@ -8,7 +8,7 @@ type Props = {
 const Header = ({ text }: Props) => {
   return (
     <Text
-      className="font-UrbanistExtraBold leading-relaxed text-primary text-center mb-4 tracking-tighter mt-10"
+      className="font-UrbanistExtraBold leading-normal text-primary text-center mb-4 tracking-tighter mt-10"
       style={{
         fontSize: 30,
       }}

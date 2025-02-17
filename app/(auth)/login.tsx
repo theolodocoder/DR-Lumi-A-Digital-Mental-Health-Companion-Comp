@@ -21,6 +21,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import OAuth from "./_lib/components/OAuth";
 import { supabase } from "@/lib/supabase";
 import LoadingScreen from "@/screens/LoadingScreen";
+import { useAuthStore } from "@/stores/authStore";
 
 const LoginPage = () => {
   const {
@@ -33,11 +34,13 @@ const LoginPage = () => {
     mode: "onSubmit",
   });
   const [showLoadingScreen, setShowLoadingScreen] = useState(false);
+  const { setSession, setUser } = useAuthStore();
 
+  //TODO: Handle auth better
   const onSubmit = async (data: LoginFormData) => {
     if (isValid) {
       const {
-        data: { session },
+        data: { session, user },
         error,
       } = await supabase.auth.signInWithPassword({
         email: data.email,
@@ -46,11 +49,12 @@ const LoginPage = () => {
 
       if (error) Alert.alert(error.message);
 
-      if (session) {
-        console.log(session);
+      if (session && user) {
         reset();
         setShowLoadingScreen(true);
         const isNewUser = session?.user?.user_metadata?.is_new_user;
+        setSession(session);
+        setUser(user);
         setTimeout(() => {
           if (isNewUser) {
             router.replace("/(onboarding)/mood");

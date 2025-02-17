@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import ContinueButton from "./_lib/components/ContinueButton";
 import ProgressHeader from "./_lib/components/ProgressHeader";
 import Header from "./_lib/components/Header";
+import { HadProfessionalHelpScore } from "./_lib/enums";
 
 type Props = {};
 
@@ -17,6 +18,7 @@ const ProfessionalHelp = (props: Props) => {
     if (hadProfessionalHelp == null) {
       return Alert.alert("Please select an option");
     }
+    console.log(hadProfessionalHelp);
     router.push("/(onboarding)/physical-symptoms");
   };
 
@@ -29,13 +31,13 @@ const ProfessionalHelp = (props: Props) => {
         <View className="flex-row mt-5 gap-x-5">
           <TouchableOpacity
             className={` flex-1 py-5 items-center rounded-full ${
-              hadProfessionalHelp === true ? "bg-green-500" : "bg-white"
+              hadProfessionalHelp === "Yes" ? "bg-green-500" : "bg-white"
             }`}
-            onPress={() => setHadProfessionalHelp(true)}
+            onPress={() => setHadProfessionalHelp("Yes")}
           >
             <Text
               className={`${
-                hadProfessionalHelp === true ? "text-white" : "text-primary"
+                hadProfessionalHelp === "Yes" ? "text-white" : "text-primary"
               } font-UrbanistExtraBold text-2xl`}
             >
               Yes
@@ -43,13 +45,13 @@ const ProfessionalHelp = (props: Props) => {
           </TouchableOpacity>
           <TouchableOpacity
             className={`flex-1 py-5 items-center rounded-full ml-4 ${
-              hadProfessionalHelp === false ? "bg-red-500" : "bg-white"
+              hadProfessionalHelp === "No" ? "bg-red-500" : "bg-white"
             }`}
-            onPress={() => setHadProfessionalHelp(false)}
+            onPress={() => setHadProfessionalHelp("No")}
           >
             <Text
               className={`${
-                hadProfessionalHelp === false ? "text-white" : "text-primary"
+                hadProfessionalHelp === "No" ? "text-white" : "text-primary"
               } font-UrbanistExtraBold text-2xl`}
             >
               No

@@ -7,6 +7,7 @@ const buttonVariants = {
     default: "bg-red-600 text-center ",
     secondary: "bg-green-500",
     primary: ["bg-[#4B3425] text-white"],
+    outline: "bg-none border border-2",
   },
   size: {
     small: ["text-sm", "py-2", "px-4"],

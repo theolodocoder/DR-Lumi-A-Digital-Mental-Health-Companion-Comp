@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, ScrollView } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { icons, images } from "@/constants";
@@ -34,7 +34,7 @@ const WelcomePage = (props: Props) => {
         </Text>
         <ArrowRight />
       </Button>
-      <View className="absolute bottom-14">
+      <View className="mt-5">
         <Text className="font-Urbanist text-[#4B3425] text-xl mt-5">
           Already have an account{" "}
           <Link

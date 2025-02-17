@@ -1,6 +1,5 @@
-import { View, Text } from "react-native";
-import React from "react";
 import { Stack } from "expo-router";
+import React from "react";
 
 const OnboardingLayout = () => {
   return (
@@ -12,6 +11,7 @@ const OnboardingLayout = () => {
       <Stack.Screen name="sleep-quality" options={{ headerShown: false }} />
       <Stack.Screen name="stress-level" options={{ headerShown: false }} />
       <Stack.Screen name="professional-help" options={{ headerShown: false }} />
+      <Stack.Screen name="complete" options={{ headerShown: false }} />
     </Stack>
   );
 };

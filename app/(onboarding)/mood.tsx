@@ -7,6 +7,7 @@ import ProgressHeader from "./_lib/components/ProgressHeader";
 import { moodEmotes } from "./_lib/constants";
 import ContinueButton from "./_lib/components/ContinueButton";
 import Header from "./_lib/components/Header";
+import { MoodScore } from "./_lib/enums";
 
 const MoodScreen = () => {
   const { mood, setMood } = useOnboardingStore();
@@ -18,13 +19,16 @@ const MoodScreen = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-background ">
-      <ProgressHeader currentStep={1} onBack={() => router.back()} />
+      <ProgressHeader
+        currentStep={1}
+        onBack={() => router.replace("/(auth)/welcome")}
+      />
       <View className="flex-1 items-center w-full px-5">
         <Header text="How would you describe your mood?" />
 
         <View className="mt-5">
           {mood ? (
-            <Text className="mt-5 font-UrbanistBold text-3xl text-gray-600">
+            <Text className="mt-5 capitalize font-UrbanistBold text-4xl text-gray-600">
               {mood}
             </Text>
           ) : (
@@ -38,11 +42,29 @@ const MoodScreen = () => {
           {Object.entries(moodEmotes).map(([key, value]) => (
             <TouchableOpacity
               key={key}
-              className="p-4 bg-white rounded-lg mt-4 flex-row"
-              onPress={() => setMood(key)}
+              className="px-5 p-4 bg-white rounded-full mt-4 flex-row gap-x-2"
+              onPress={() => setMood(key as keyof typeof MoodScore)}
+              style={{
+                shadowColor: "#ccc",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                backgroundColor: mood === key ? "#9BB068" : "#fff",
+              }}
             >
-              <Text>{moodEmotes[key]}</Text>
-              <Text className="text-gray-600 text-center">{key}</Text>
+              <Text style={{ fontSize: 20 }}>{moodEmotes[key]}</Text>
+              <Text
+                className="text-gray-600 text-center capitalize"
+                style={{
+                  fontSize: 20,
+                  color: mood === key ? "#fff" : "#1F160F",
+                }}
+              >
+                {key}
+              </Text>
             </TouchableOpacity>
           ))}
         </View>

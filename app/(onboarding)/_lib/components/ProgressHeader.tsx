@@ -16,6 +16,8 @@ const ProgressHeader = ({ onBack, currentStep }: Props) => {
       <TouchableOpacity
         onPress={onBack}
         className="flex-row items-center gap-x-5"
+        // disabled={currentStep === 1}
+        // style={{ opacity: currentStep === 1 ? 0.5 : 1 }}
       >
         <View className="h-16 w-16 border border-primary rounded-full items-center justify-center">
           <Image source={icons.backArrow} />

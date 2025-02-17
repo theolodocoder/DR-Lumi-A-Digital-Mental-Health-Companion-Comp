@@ -22,6 +22,7 @@ import * as yup from "yup";
 import FormError from "@/components/FormError";
 import { supabase } from "@/lib/supabase";
 import LoadingScreen from "@/screens/LoadingScreen";
+import { useAuthStore } from "@/stores/authStore";
 
 // Define validation schema using Yup
 const registerSchema = yup.object().shape({
@@ -59,13 +60,14 @@ const RegisterPage = () => {
     resolver: yupResolver(registerSchema),
     mode: "onChange", // Validate on every change
   });
+  const { setSession, setUser } = useAuthStore();
 
   const [showLoadingScreen, setShowLoadingScreen] = useState(false);
 
   const onSubmit = async (data: RegisterFormData) => {
     if (isValid) {
       const {
-        data: { session },
+        data: { session, user },
         error,
       } = await supabase.auth.signUp({
         email: data.email,
@@ -78,8 +80,11 @@ const RegisterPage = () => {
       });
 
       if (error) Alert.alert(error.message);
-      if (session) {
-        console.log(session);
+      if (session && user) {
+        console.log({ session, user });
+
+        setSession(session);
+        setUser(user);
         reset();
         setShowLoadingScreen(true);
 
