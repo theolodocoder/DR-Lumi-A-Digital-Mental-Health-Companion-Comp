@@ -1,24 +1,24 @@
 // health.enums.ts
 export enum MoodScore {
-  Angry = 1, // 😡
-  Anxious = 2, // 😰
-  Sad = 3, // 😞
-  Meh = 4, // 😐
-  Happy = 5, //😊
-  OverJoyed = 6, // 😄
+  Angry = 1,
+  Anxious = 2,
+  Sad = 3,
+  Meh = 4,
+  Happy = 5,
+  Overjoyed = 6,
 }
 
 export enum HadProfessionalHelpScore {
   No = 1,
-  Yes = 3, // Seeking help improves health
+  Yes = 3,
 }
 
 export enum SleepQualityScore {
-  Worst = 1, // <3 HOURS
-  Poor = 2, // 3-4 HOURS
-  Fair = 3, // 5 HOURS
-  Good = 4, // 6-7 HOURS
-  Excellent = 5, // 7-9 HOURS
+  Worst = 1,
+  Poor = 2,
+  Fair = 3,
+  Good = 4,
+  Excellent = 5,
 }
 
 export enum StressLevelScore {
@@ -56,9 +56,9 @@ export enum MeidcationText {
 }
 
 export enum MoodMessage {
-  VeryPoor = "You're going through a tough time. Take a deep breath, and remember, brighter days are ahead. 💙",
-  Poor = "It's okay to feel down sometimes. Be kind to yourself, and take it one step at a time. 🌿",
-  Neutral = "You’re mentally stable. We’re redirecting you back to the home screen. Are you ready? 😊",
-  Good = "You're in a good place! Keep up the positivity and continue doing what makes you happy. 🌞",
-  Excellent = "You're thriving! Spread the good vibes and inspire those around you. 🚀",
+  VeryPoor = "You're not alone in this. Small steps forward matter, and support is available when you need it. 💜",
+  Poor = "It's okay to have tough days. Be gentle with yourself and take one moment at a time. 🌱",
+  Neutral = "You're finding your balance. Notice what helps you feel grounded today. 🌿",
+  Good = "You're doing great! Keep nurturing what brings you joy and peace. ✨",
+  Excellent = "You're thriving! Your journey can inspire others - keep shining bright! 🌟",
 }

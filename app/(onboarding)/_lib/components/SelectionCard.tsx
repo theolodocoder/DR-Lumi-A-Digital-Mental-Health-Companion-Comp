@@ -20,7 +20,7 @@ const SelectionCard = ({
     <Pressable
       onPress={onPress}
       className={clsx(
-        "w-[47%] p-5 flex flex-col justify-center",
+        "w-full p-5 flex flex-col justify-center",
         selected ? "bg-[#9BB068] border-[#9BB068]" : "bg-white border-gray-200"
       )}
       style={{
@@ -42,7 +42,7 @@ const SelectionCard = ({
       />
       <Text
         className={clsx(
-          "mt-10 font-UrbanistBold text-xl text-primary",
+          "mt-20 font-UrbanistBold text-xl text-primary",
           selected ? "text-white" : "text-brown-900"
         )}
       >

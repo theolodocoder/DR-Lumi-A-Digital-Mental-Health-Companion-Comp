@@ -11,18 +11,12 @@ import Header from "./_lib/components/Header";
 import ProgressHeader from "./_lib/components/ProgressHeader";
 
 const ExpressionScreen = () => {
-  const {
-    expression,
-    setExpression,
-    setSentimentScore,
-    calculateAndSetHealthScore,
-  } = useOnboardingStore();
+  const { expression, setExpression, calculateAndSetHealthScore } =
+    useOnboardingStore();
   const [showComplScreen, setShowComplScreen] = useState(false);
 
   const handleNext = () => {
     if (expression) {
-      const result = analyzeSentiment(expression); // Analyze sentiment
-      setSentimentScore(result); // Store sentiment score
       calculateAndSetHealthScore();
       setShowComplScreen(true);
 

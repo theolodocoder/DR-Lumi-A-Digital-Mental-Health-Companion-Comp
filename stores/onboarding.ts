@@ -8,7 +8,10 @@ import {
   SleepQualityScore,
   StressLevelScore,
 } from "@/app/(onboarding)/_lib/enums";
-import { calculateHealthScore } from "@/app/(onboarding)/_lib/utils/calculateHealthScore";
+import {
+  calculateHealthScore,
+  HealthScoreCalculator,
+} from "@/app/(onboarding)/_lib/utils/calculateHealthScore";
 
 type OnboardingState = {
   mood: keyof typeof MoodScore | null;
@@ -50,6 +53,7 @@ export const useOnboardingStore = create<OnboardingState>((set) => ({
   setExpression: (expression) => set({ expression }),
   setMedications: (medications) => set({ medications }),
   setSentimentScore: (sentimentScore) => set({ sentimentScore }),
+
   calculateAndSetHealthScore: () =>
     set((state) => {
       if (
@@ -58,21 +62,23 @@ export const useOnboardingStore = create<OnboardingState>((set) => ({
         state.sleepQuality &&
         state.stressLevel &&
         state.physicalSymptoms &&
-        state.medications &&
-        state.sentimentScore !== null
+        state.medications
       ) {
-        const { score } = calculateHealthScore({
+        const result = HealthScoreCalculator.calculateHealthScore({
           mood: state.mood,
           hadProfessionalHelp: state.hadProfessionalHelp,
           sleepQuality: state.sleepQuality,
           stressLevel: state.stressLevel,
           physicalSymptoms: state.physicalSymptoms,
           medications: state.medications,
-          sentimentScore: state.sentimentScore,
+          expression: state.expression,
         });
 
         return {
-          healthScore: score,
+          healthScore: result.score,
+          sentimentScore: result.sentiment.score,
+          sentimentAnalysis: result.sentiment,
+          scoreBreakdown: result.breakdown,
         };
       }
       return {};

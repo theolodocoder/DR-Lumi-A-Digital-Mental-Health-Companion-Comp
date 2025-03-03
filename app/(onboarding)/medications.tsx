@@ -32,11 +32,12 @@ const Medications = () => {
             flexDirection: "row",
             flexWrap: "wrap",
             justifyContent: "space-between",
-            marginVertical: 10,
+            marginTop: 20,
+            gap: 10,
           }}
         >
           {medicationOptions.map((item) => (
-            <View key={item.label} style={{ width: "48%", marginVertical: 10 }}>
+            <View key={item.label} style={{ width: "48%" }}>
               <SelectionCard
                 label={item.label}
                 icon={item.icon}

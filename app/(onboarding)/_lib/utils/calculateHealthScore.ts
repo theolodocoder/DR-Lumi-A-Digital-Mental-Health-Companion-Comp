@@ -1,52 +1,91 @@
+import { SentimentAnalyzer } from "@/utils/sentiment";
+import { HEALTH_RANGES, METRIC_WEIGHTS } from "../constants";
 import {
-  MoodScore,
   HadProfessionalHelpScore,
+  MedicationsScore,
+  MoodScore,
+  PhysicalSymptomsScore,
   SleepQualityScore,
   StressLevelScore,
-  PhysicalSymptomsScore,
-  MedicationsScore,
 } from "../enums";
+import { HealthMetrics, SentimentAnalysisResult } from "../types";
 
-type OnboardingData = {
-  mood: keyof typeof MoodScore;
-  hadProfessionalHelp: keyof typeof HadProfessionalHelpScore;
-  sleepQuality: keyof typeof SleepQualityScore;
-  stressLevel: keyof typeof StressLevelScore;
-  physicalSymptoms: keyof typeof PhysicalSymptomsScore;
-  medications: keyof typeof MedicationsScore;
-  sentimentScore: number; // Sentiment "comparative" score (-5 to 5)
-};
+export class HealthScoreCalculator {
+  private static normalize(value: number, min: number, max: number): number {
+    return ((value - min) / (max - min)) * 100;
+  }
 
-export const calculateHealthScore = (
-  data: OnboardingData
-): {
-  score: number;
-} => {
-  // Sentiment has 40% weight, others 60% combined
-  const SENTIMENT_WEIGHT = 0.4;
+  private static calculateMetricScore(metrics: HealthMetrics): number {
+    const scores = {
+      mood: this.normalize(MoodScore[metrics.mood], 1, 6),
+      hadProfessionalHelp: this.normalize(
+        HadProfessionalHelpScore[metrics.hadProfessionalHelp],
+        1,
+        3
+      ),
+      sleepQuality: this.normalize(
+        SleepQualityScore[metrics.sleepQuality],
+        1,
+        5
+      ),
+      stressLevel: this.normalize(StressLevelScore[metrics.stressLevel], 1, 5),
+      physicalSymptoms: this.normalize(
+        PhysicalSymptomsScore[metrics.physicalSymptoms],
+        1,
+        5
+      ),
+      medications: this.normalize(MedicationsScore[metrics.medications], 1, 5),
+    };
 
-  const normalize = (value: number, min: number, max: number) =>
-    ((value - min) / (max - min)) * 100;
+    return Object.entries(scores).reduce((total, [metric, score]) => {
+      return total + score * METRIC_WEIGHTS[metric as keyof typeof scores];
+    }, 0);
+  }
 
-  // Base factors (60% weight)
-  const baseScore =
-    ((normalize(MoodScore[data.mood], 1, 6) +
-      normalize(HadProfessionalHelpScore[data.hadProfessionalHelp], 1, 3) +
-      normalize(SleepQualityScore[data.sleepQuality], 1, 5) +
-      normalize(StressLevelScore[data.stressLevel], 1, 5) +
-      normalize(PhysicalSymptomsScore[data.physicalSymptoms], 1, 5) +
-      normalize(MedicationsScore[data.medications], 1, 5)) /
-      6) *
-    0.6;
+  static calculateHealthScore(metrics: HealthMetrics): {
+    score: number;
+    sentiment: SentimentAnalysisResult;
+    breakdown: Record<string, number>;
+  } {
+    // Analyze sentiment from expression
+    const sentiment = SentimentAnalyzer.analyzeSentiment(metrics.expression);
 
-  // Sentiment (40% weight)
-  const sentiment = Math.max(-5, Math.min(data.sentimentScore, 5));
-  const sentimentScore = ((sentiment + 5) / 10) * 100 * 0.4;
+    // Calculate base metric score
+    const metricScore = this.calculateMetricScore(metrics);
 
-  const totalScore = baseScore + sentimentScore;
-  const roundedScore = Math.round(totalScore);
+    // Calculate sentiment score (normalized to 0-100 range)
+    const sentimentScore =
+      ((sentiment.score + 5) / 10) * 100 * METRIC_WEIGHTS.sentiment;
 
-  return {
-    score: roundedScore,
-  };
-};
+    // Calculate final score
+    const totalScore = Math.round(metricScore + sentimentScore);
+
+    // Prepare score breakdown
+    const breakdown = {
+      metricScore: metricScore,
+      sentimentScore: sentimentScore,
+      sentimentMagnitude: sentiment.magnitude,
+      keywordsFound: sentiment.keywords.length,
+    };
+
+    console.log({
+      score: Math.max(0, Math.min(100, totalScore)),
+      sentiment,
+      breakdown,
+    });
+
+    return {
+      score: Math.max(0, Math.min(100, totalScore)),
+      sentiment,
+      breakdown,
+    };
+  }
+
+  static getHealthRange(score: number) {
+    return (
+      Object.values(HEALTH_RANGES).find(
+        (range) => score >= range.min && score <= range.max
+      ) || HEALTH_RANGES.CRITICAL
+    );
+  }
+}

@@ -1,16 +1,14 @@
-import { View, Text, Image, StyleSheet, Alert } from "react-native";
-import React, { useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useOnboardingStore } from "@/stores/onboarding";
-import { icons, images } from "@/constants";
-import { getMoodMessage } from "./_lib/utils/getMood";
-import { MaterialIcons } from "@expo/vector-icons";
 import Button from "@/components/Button";
 import ArrowRight from "@/components/icons/ArrowRight";
-import { router } from "expo-router";
-import { useAuthStore } from "@/stores/authStore";
+import { icons, images } from "@/constants";
 import { supabase } from "@/lib/supabase";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import { useOnboardingStore } from "@/stores/onboarding";
+import { MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import React, { useEffect } from "react";
+import { Alert, Image, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { getMoodMessage } from "./_lib/utils/getMood";
 
 type Props = {};
 
@@ -55,7 +53,7 @@ const Complete = (props: Props) => {
       </View>
       <View style={styles.healthScoreContainer}>
         <Image source={images.healthScoreFrame} />
-        <Text style={{ ...styles.healthScoreText, color: color }}>
+        <Text style={{ ...styles.healthScoreText }}>
           {healthScore + "%" || "Score"}
         </Text>
       </View>
